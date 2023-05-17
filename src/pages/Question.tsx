@@ -56,9 +56,6 @@ export default function Question() {
       <div className="flex flex-col gap-y-4 text-center">
         <p className="text-2xl font-bold tracking-wider">{question.question}</p>
       </div>
-      <div>
-        {selected} - {result}
-      </div>
 
       <div className="w-full max-w-md">
         <div className="mx-auto w-full">
