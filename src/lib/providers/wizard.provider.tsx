@@ -8,9 +8,11 @@ import {
 import { Actions } from "../types/action.type";
 import { Question } from "../types/question";
 import { QuestionAnswer } from "../types/question-answer";
+import { useOutletContext } from "react-router-dom";
 type WizardState = {
   questions: Question[];
   answers: QuestionAnswer[];
+  currentQuestion: number;
 };
 
 type WizardContext = {
@@ -40,22 +42,20 @@ export default function WizardProvider({
   questions: Question[];
   children: ReactNode;
 }) {
-  const [state, dispatch] = useReducer(
-    reducer,
-    { questions: [], answers: [], currentQuestion: 0 },
-    () => ({ questions, answers: [], currentQuestion: 0 })
-  );
+  const [state, dispatch] = useReducer(reducer, {
+    questions,
+    answers: [],
+    currentQuestion: 0,
+  });
   return (
     <Context.Provider value={{ state, dispatch }}>{children} </Context.Provider>
   );
 }
 
-export const useWizard = () => {
-  const context = useContext(Context);
-
-  if (context === undefined) {
-    throw new Error("useWizard must be used inside WizardProvider");
-  }
-
-  return context;
-};
+export function useWizard() {
+  return useOutletContext<{
+    questions: Question[];
+    answers: QuestionAnswer[];
+    answerQuestion: (questionId: number, correct: boolean) => void;
+  }>();
+}

@@ -1,4 +1,4 @@
 export type QuestionAnswer = {
-  slug: string;
-  answer: boolean;
+  questionId: number;
+  correct: boolean;
 };

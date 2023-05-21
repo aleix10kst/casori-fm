@@ -1,18 +1,10 @@
-import { useEffect } from "react";
 import { Button } from "../components/Button";
 import { useWizard } from "../lib/providers/wizard.provider";
 import { useNavigate } from "react-router-dom";
 
 export default function Welcome() {
-  const {
-    state: { questions },
-    dispatch,
-  } = useWizard();
+  const { questions } = useWizard();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    dispatch({ type: "START" });
-  }, [dispatch]);
 
   const handleStart = () => {
     navigate(`/questions/${questions[0].slug}`);

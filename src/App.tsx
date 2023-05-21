@@ -1,33 +1,41 @@
 import { useEffect, useState } from "react";
-
-import { Question } from "./lib/types/question";
-import { supabase } from "./lib/supabase/supabase.client";
-import { buildQuestion } from "./lib/utils/question-utils.functions";
 import WizardProvider from "./lib/providers/wizard.provider";
 import { Wizard } from "./components/Wizard";
 import { Outlet } from "react-router-dom";
+import { Question } from "./lib/types/question";
+import { QuestionAnswer } from "./lib/types/question-answer";
 
 function App() {
   const [questions, setQuestions] = useState<Question[]>([]);
-
-  async function getQuestions() {
-    const { data } = await supabase.from("question").select("*");
-    setQuestions((data ?? []).map(buildQuestion));
-  }
+  const [answers, setAnswer] = useState<QuestionAnswer[]>([]);
 
   useEffect(() => {
+    const getQuestions = async () => {
+      try {
+        const response = await fetch("/questions.json");
+        const questions = (await response.json()) as Question[];
+        setQuestions(questions);
+      } catch (error) {
+        setQuestions([]);
+      }
+    };
     getQuestions();
   }, []);
 
-  if (questions.length === 0) {
-    return <div></div>;
+  const answerQuestion = (questionId: number, correct: boolean) => {
+    console.log(questionId, correct);
+    setAnswer((answers) => [...answers, { questionId, correct }]);
+  };
+
+  if (!questions?.length) {
+    return <div>Loading</div>;
   }
 
   return (
     <WizardProvider questions={questions}>
       <div className="grid h-full place-items-center bg-yellow-400 px-8">
         <Wizard>
-          <Outlet />
+          <Outlet context={{ questions, answers, answerQuestion }} />
         </Wizard>
       </div>
     </WizardProvider>

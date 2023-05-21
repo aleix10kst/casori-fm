@@ -2,10 +2,7 @@ import { useState } from "react";
 import { RadioGroup } from "@headlessui/react";
 import clsx from "clsx";
 import { useWizard } from "../lib/providers/wizard.provider";
-import {
-  buildQuestion,
-  getNextQuestionSlug,
-} from "../lib/utils/question-utils.functions";
+import { getNextQuestionSlug } from "../lib/utils/question-utils.functions";
 import { Button } from "../components/Button";
 import { Question } from "../lib/types/question";
 import {
@@ -13,17 +10,14 @@ import {
   useLoaderData,
   useNavigate,
 } from "react-router-dom";
-import { supabase } from "../lib/supabase/supabase.client";
+import { shuffleArray } from "../lib/utils/array-utils.functions";
 
 const isAnswerCorrect = (selectedAnswer: string, answer: string) =>
   selectedAnswer.localeCompare(answer) === 0;
 
 export default function Question() {
   const question = useLoaderData() as Question;
-  const {
-    state: { questions },
-    dispatch,
-  } = useWizard();
+  const { questions, answerQuestion } = useWizard();
   const [selected, setSelected] = useState<number | null>(null);
   const [result, setResult] = useState<boolean | null>(null);
   const navigate = useNavigate();
@@ -34,11 +28,8 @@ export default function Question() {
     }
     const selectedAnswer = question.options[selected];
     const result = isAnswerCorrect(selectedAnswer, question.answer);
+    answerQuestion(question.questionId, result);
     setResult(result);
-    dispatch({
-      type: "SUBMIT_ANSWER",
-      payload: { slug: question.slug, answer: result },
-    });
   };
 
   const handleNext = () => {
@@ -124,12 +115,14 @@ export default function Question() {
 
 export async function QuestionLoader({ params }: LoaderFunctionArgs) {
   const { slug } = params;
-  const { data: questions } = await supabase
-    .from("question")
-    .select("*")
-    .eq("slug", slug);
+  const response = await fetch("/questions.json");
+  const questions = (await response.json()) as Question[];
   if (!questions?.length) {
     throw Error("Question not found");
   }
-  return buildQuestion(questions[0]);
+  const question = questions.find((question) => question.slug === slug)!;
+  return {
+    ...question,
+    options: shuffleArray(question.options),
+  } satisfies Question;
 }

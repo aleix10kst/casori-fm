@@ -1,0 +1,34 @@
+[
+  {
+    "questionId": 0,
+    "question": "Continua la frase: \"Barna é...\"",
+    "answer": "gran",
+    "options": ["gran", "macu", "una merda", "lluny"],
+    "type": "raw",
+    "slug": "continua-la-frase-barna-e"
+  },
+  {
+    "questionId": 1,
+    "question": "Quan es va crear el grup de Whats App del grup d'informàtica?",
+    "answer": "Novembre de 2014",
+    "options": ["Novembre de 2014", "Gener 2015", "Març 2014", "Quin grup?"],
+    "type": "raw",
+    "slug": "quan-es-va-crear-el-grup-de-whats-app-del-grup-d-informatica"
+  },
+  {
+    "questionId": 2,
+    "question": "Quants cops s'ha canviat de número en Pol? ",
+    "answer": "Qui és en Pol? No tinc guardat el seu número.",
+    "options": ["Qui és en Pol? No tinc guardat el seu número.", "3", "5", "2"],
+    "type": "raw",
+    "slug": "quants-cops-s-ha-canviat-de-numero-en-pol"
+  },
+  {
+    "questionId": 3,
+    "question": "Qui es va tencar a la teva habitació i no et deixaba entrar-hi a dormir?",
+    "answer": "Iniesta",
+    "options": ["Iniesta", "Marcel", "Crous", "Pol"],
+    "type": "raw",
+    "slug": "qui-es-va-tencar-a-la-teva-habitacio-i-no-et-deixaba-entrar-hi-a-dormir"
+  }
+]
