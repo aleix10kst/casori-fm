@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import WizardProvider from "./lib/providers/wizard.provider";
 import { Wizard } from "./components/Wizard";
 import { Outlet } from "react-router-dom";
 import { Question } from "./lib/types/question";
@@ -32,13 +31,11 @@ function App() {
   }
 
   return (
-    <WizardProvider questions={questions}>
-      <div className="grid h-full place-items-center bg-yellow-400 px-8">
-        <Wizard>
-          <Outlet context={{ questions, answers, answerQuestion }} />
-        </Wizard>
-      </div>
-    </WizardProvider>
+    <div className="grid h-full place-items-center bg-yellow-400 px-8">
+      <Wizard>
+        <Outlet context={{ questions, answers, answerQuestion }} />
+      </Wizard>
+    </div>
   );
 }
 

@@ -1,5 +1,4 @@
-import { Question, QuestionDTO } from "../types/question";
-import { shuffleArray } from "./array-utils.functions";
+import { Question } from "../types/question";
 
 export const getNextQuestionSlug = (questions: Question[], slug: string) => {
   const currentQuestionIndex = questions.findIndex(
@@ -10,26 +9,4 @@ export const getNextQuestionSlug = (questions: Question[], slug: string) => {
     return "/results";
   }
   return `/questions/${questions[nextQuestionIndex].slug}`;
-};
-
-export const buildQuestion = (questionDTO: QuestionDTO): Question => {
-  const {
-    question_id,
-    question,
-    answer,
-    option_1,
-    option_2,
-    option_3,
-    slug,
-    type,
-  } = questionDTO;
-  const options = shuffleArray([answer, option_1, option_2, option_3]);
-  return {
-    question_id,
-    question: question,
-    answer,
-    options,
-    slug,
-    type,
-  } satisfies Question;
 };
