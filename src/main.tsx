@@ -6,19 +6,26 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Welcome from "./pages/Welcome.tsx";
 import Question, { QuestionLoader } from "./pages/Question.tsx";
 import ResultsPage from "./pages/Results.tsx";
+import Introduction from "./pages/Introduction.tsx";
+import { ROUTES } from "./lib/routes.ts";
+import Pledges, { PledgesLoader } from "./pages/Pledges.tsx";
+import Farewell from "./pages/Farewell.tsx";
 
 const router = createBrowserRouter([
   {
     path: "",
     element: <App />,
     children: [
-      { path: "", element: <Welcome />, index: true },
+      { path: ROUTES.INTRODUCTION, element: <Introduction /> },
       {
-        path: "questions/:slug",
+        path: `${ROUTES.QUESTION}/:slug`,
         element: <Question />,
         loader: QuestionLoader,
       },
-      { path: "results", element: <ResultsPage /> },
+      { path: ROUTES.RESULTS, element: <ResultsPage /> },
+      { path: ROUTES.PLEDGES, element: <Pledges />, loader: PledgesLoader },
+      { path: ROUTES.FAREWELL, element: <Farewell /> },
+      { path: ROUTES.LANDING, element: <Welcome />, index: true },
     ],
   },
 ]);
@@ -26,6 +33,5 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-    <App />
   </React.StrictMode>
 );

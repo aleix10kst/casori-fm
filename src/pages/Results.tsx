@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Button } from "../components/Button";
 import { useWizard } from "../lib/providers/wizard.provider";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../lib/routes";
+import { getQuestionsResults } from "../lib/utils/question-utils.functions";
 
 function ShowNextAction({
   hasAnsweredAllQuestionsCorrectly,
   toggleNextView,
 }: {
   hasAnsweredAllQuestionsCorrectly: boolean;
-  toggleNextView: (nextView: "pledges" | "summary") => void;
+  toggleNextView: (nextView: "pledges" | "farewell") => void;
 }) {
   return hasAnsweredAllQuestionsCorrectly ? (
     <div className="w-full">
@@ -16,17 +19,18 @@ function ShowNextAction({
         <br />
         Pots passar a recollir el titol.
       </p>
-      <Button className="w-full" onClick={() => toggleNextView("summary")}>
+      <Button className="w-full" onClick={() => toggleNextView("farewell")}>
         Recull el títol
       </Button>
     </div>
   ) : (
     <div className="w-full">
       <p className="mb-4 text-center text-red-500 text-xl">
-        Malauradament has fallat alguna pregunta així que... toca reucperar.
+        Malauradament has fallat alguna pregunta així que... toca pagar alguna
+        penyora!
       </p>
       <Button className="mt-4 w-full" onClick={() => toggleNextView("pledges")}>
-        Vés a les recuepracions
+        Vés a les penyores
       </Button>
     </div>
   );
@@ -43,11 +47,11 @@ function Results({
   correctAnswers: number;
   wrongAnswers: number;
   hasAnsweredAllQuestionsCorrectly: boolean;
-  toggleNextView: (nextView: "pledges" | "summary") => void;
+  toggleNextView: (nextView: "pledges" | "farewell") => void;
 }) {
   return (
-    <div className="flex flex-col space-y-8 w-full">
-      <h1 className="text-4xl font-bold text-center">Aquest curs ha anat...</h1>
+    <div className="flex flex-col items-center gap-y-6 w-4/5">
+      <h1 className="text-4xl font-bold">Aquest curs ha anat...</h1>
       <div className="text-center flex flex-col gap-y-2">
         <p className="text-3xl font-bold">
           Preguntes totals: <span>{questions}</span>
@@ -69,83 +73,24 @@ function Results({
   );
 }
 
-export function Pledges() {
-  return <div>Aquí hi aniran les penyores</div>;
-}
-
-export function Summary({
-  hasAnsweredAllQuestionsCorrectly,
-}: {
-  hasAnsweredAllQuestionsCorrectly: boolean;
-}) {
-  return (
-    <div className="text-center space-y-2">
-      {hasAnsweredAllQuestionsCorrectly ? (
-        <>
-          <p className="font-bold text-xl">
-            Doncs sembla que has tret matrícula d'honor! Qui ho havia de dir...
-          </p>
-          <p className="text-gray-200 font-bold">{`(Com en Pau de Jesus a Habilitats Directives i de Comunicació)`}</p>
-        </>
-      ) : (
-        <p className="font-bold text-xl">
-          Mentre tothom ja havia començat les vacances, tu encara estaves
-          estudiant per a les recus. Però... finalment has aprovat tot net!
-          Enhorabona!
-        </p>
-      )}
-
-      <p className="text-xl font-bold">
-        Pots anar a la taula dels frikis que han fet aquest test a recollir el
-        titol.
-      </p>
-      <p className="text-3xl">
-        T'estimem i us estimem Puig i Maria. Que sigueu molt feliços {`<3`}
-      </p>
-    </div>
-  );
-}
-
 export default function ResultsPage() {
   const { questions, answers } = useWizard();
   const [showResults, setShowResults] = useState(false);
-  const [showPledges, setShowPledges] = useState(false);
-  const [showSummary, setShowSummary] = useState(false);
+  const navigate = useNavigate();
 
-  const { correctAnswers, wrongAnswers } = answers.reduce<{
-    correctAnswers: number;
-    wrongAnswers: number;
-  }>(
-    (acc, answer) => ({
-      correctAnswers: answer.correct
-        ? acc.correctAnswers + 1
-        : acc.correctAnswers,
-      wrongAnswers: !answer.correct ? acc.wrongAnswers + 1 : acc.wrongAnswers,
-    }),
-    { correctAnswers: 0, wrongAnswers: 0 }
-  );
+  const { correctAnswers, wrongAnswers } = getQuestionsResults(answers);
   const hasAnsweredAllQuestionsCorrectly = correctAnswers === questions.length;
 
-  const handleShowNextView = (nextView: "summary" | "pledges") => {
+  const handleShowNextView = (nextView: "farewell" | "pledges") => {
     switch (nextView) {
-      case "summary":
-        setShowPledges(false);
-        setShowSummary(true);
-        break;
+      case "farewell":
+        return navigate(`/${ROUTES.FAREWELL}`);
       case "pledges":
-        setShowPledges(true);
-        setShowSummary(false);
-        break;
+        return navigate(`/${ROUTES.PLEDGES}`);
     }
   };
 
-  return showSummary ? (
-    <Summary
-      hasAnsweredAllQuestionsCorrectly={hasAnsweredAllQuestionsCorrectly}
-    />
-  ) : showPledges ? (
-    <Pledges />
-  ) : showResults ? (
+  return showResults ? (
     <Results
       questions={questions.length}
       correctAnswers={correctAnswers}
@@ -154,17 +99,17 @@ export default function ResultsPage() {
       toggleNextView={handleShowNextView}
     />
   ) : (
-    <div className="flex flex-col w-full">
-      <div className="flex flex-col gap-y-4 pb-8">
-        <p className="text-3xl text-center font-semibold tracking-wide">
-          Ha estat un any molt dur i els exàmens han estat molt durs... però és
-          hora de veure les notes.
-        </p>
-        <p className="text-center text-sm text-gray-600">
-          O... et tocarà anar a recuperar alguna assignatura ;)
-        </p>
-      </div>
-      <Button onClick={() => setShowResults(true)}>Descobreix-les</Button>
+    <div className="flex flex-col items-center gap-y-6 w-4/5">
+      <h1 className="font-bold text-4xl">Felicitats!</h1>
+      <p className="text-center text-lg text-gray-600">
+        Has contestat totes les preguntes que t'hem preparat. Les hem preparat
+        amb molt d'a... molt depressa i corrents a última hora.
+        <br />
+        <br />
+        Anem a veure que tal se t'ha donat això... esperem que hagi anat millor
+        que un exàmen de la Bea d'IA o d'en Rigau de FC.
+      </p>
+      <Button onClick={() => setShowResults(true)}>Descobreix-los</Button>
     </div>
   );
 }

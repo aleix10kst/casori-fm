@@ -22,7 +22,6 @@ function App() {
   }, []);
 
   const answerQuestion = (questionId: number, correct: boolean) => {
-    console.log(questionId, correct);
     setAnswer((answers) => [...answers, { questionId, correct }]);
   };
 
