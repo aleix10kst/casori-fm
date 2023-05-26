@@ -17,7 +17,7 @@ export default function Farewell() {
         T'estimem i us estimem Puig i Maria. <br></br>Que sigueu molt feliços ❤️
       </p>
       <p className="text-[10px] text-gray-400 font-light">
-        Missatge generat per ChatGPT 3.5.
+        Missatge generat per ChatGPT.
         <br /> Recorda substituir els #&#123;NOM&#125; pel de les persones a qui
         va dirigit aquest missatge
       </p>

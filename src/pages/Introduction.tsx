@@ -21,8 +21,8 @@ export default function Introduction() {
         <br />
         Et presentem un seguit de preguntes expressament seleccionades pels
         nostres experts en Xarxes, PROSO, EDA, IA, FC, PLP i PDS que hauràs de
-        respondre correctament per vols passar de curs i obtenir la més gran de
-        les recompenses: unes braves al Konig. Estàs preparat? ;)
+        respondre correctament per passar de curs i obtenir la més gran de les
+        recompenses: unes braves al Konig. Estàs preparat? ;)
       </p>
       <Button onClick={handleStart} className="w-2/6">
         Comença el test

@@ -25,40 +25,40 @@
   },
   {
     "questionId": 3,
-    "question": "Qui es va tencar a la teva habitació i no et deixaba entrar-hi a dormir?",
+    "question": "Qui es va tencar a la teva habitació i no et deixava entrar-hi a dormir?",
     "answer": "Iniesta",
     "options": ["Iniesta", "Marcel", "Crous", "Pol"],
     "type": "raw",
-    "slug": "qui-es-va-tencar-a-la-teva-habitacio-i-no-et-deixaba-entrar-hi-a-dormir"
+    "slug": "qui-es-va-tencar-a-la-teva-habitacio-i-no-et-deixava-entrar-hi-a-dormir"
   },
   {
     "questionId": 4,
-    "question": "Quin piti es el mes sagrat (be no se si quedará be fe servi \"sagrat\")",
+    "question": "Quin és el piti mes sagrat?",
     "answer": "L'ultim",
-    "options": ["L'ultim", "El primer", "el del mig", "el 14e"],
+    "options": ["L'últim", "El primer", "El del mig", "el 14è"],
     "type": "raw",
     "slug": "quin-piti-es-el-mes-sagrat-be-no-se-si-quedara-be-fe-servi-sagrat"
   },
   {
     "questionId": 6,
-    "question": "Quin és el meme més popularitzat de l'època que estudiàvem? ",
-    "answer": "Ola k ase? Què vols dir?   Imatge",
+    "question": "Quin és el meme més popularitzat durant l'època que estudiàvem? ",
+    "answer": "Ola k ase? Què vols dir?",
     "options": [
-      "Ola k ase? Què vols dir?   Imatge",
-      "He leído tu whats app Imatge",
-      "Joc de l'ocell Imatge",
-      "Piratas del caribe Imatge"
+      "Ola k ase? Què vols dir?",
+      "He leído tu whats app",
+      "Joc de l'ocell",
+      "Piratas del caribe"
     ],
     "type": "raw",
     "slug": "quin-es-el-meme-mes-popularitzat-de-l-epoca-que-estudiavem"
   },
   {
     "questionId": 7,
-    "question": "Quin itinerari va ser el més demanat pels del grup de whats app? ",
+    "question": "Quin itinerari va ser el més demanat pels del grup de Whatsapp? ",
     "answer": "Software",
     "options": ["Software", "Xarxes", "Visió i robòtica", "Computació"],
     "type": "raw",
-    "slug": "quin-itinerari-va-ser-el-mes-demanat-pels-del-grup-de-whats-app"
+    "slug": "quin-itinerari-va-ser-el-mes-demanat-pels-del-grup-de-whatsapp"
   },
   {
     "questionId": 8,
@@ -94,7 +94,7 @@
   },
   {
     "questionId": 12,
-    "question": "Que es feia fins les 6?",
+    "question": "Què es feia fins les 6?",
     "answer": "Una birra tonta",
     "options": [
       "Una birra tonta",
